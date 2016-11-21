@@ -152,6 +152,10 @@ def main(rancher_url, rancher_key, rancher_secret, environment, stack, service, 
     # copy over the existing config
     upgrade['inServiceStrategy']['launchConfig'] = service['launchConfig']
 
+    for secondaryLaunchConfig in service['secondaryLaunchConfigs']:
+        secondaryLaunchConfig['requestedHostId'] = service['launchConfig']['requestedHostId']
+        upgrade['inServiceStrategy']['secondaryLaunchConfigs'].append(secondaryLaunchConfig.copy())
+
     if new_image:
         # place new image into config
         upgrade['inServiceStrategy']['launchConfig']['imageUuid'] = 'docker:%s' % new_image
