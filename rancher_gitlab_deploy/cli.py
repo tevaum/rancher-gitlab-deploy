@@ -153,7 +153,8 @@ def main(rancher_url, rancher_key, rancher_secret, environment, stack, service, 
     upgrade['inServiceStrategy']['launchConfig'] = service['launchConfig']
 
     for secondaryLaunchConfig in service['secondaryLaunchConfigs']:
-        secondaryLaunchConfig['requestedHostId'] = service['launchConfig']['requestedHostId']
+        if 'requestedHostId' in service['launchConfig']:
+            secondaryLaunchConfig['requestedHostId'] = service['launchConfig']['requestedHostId']
         upgrade['inServiceStrategy']['secondaryLaunchConfigs'].append(secondaryLaunchConfig.copy())
 
     if new_image:
